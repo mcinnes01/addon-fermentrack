@@ -1,9 +1,10 @@
 {
   "name": "Fermentrack",
-  "version": "2021.1.5",
+  "version": "2021.1.6",
   "slug": "fermentrack",
   "description": "BrewPi-compatible fermentation tracking & temperature control software",
   "url": "https://github.com/mcinnes01/addon-fermentrack",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
   "startup": "services",
   "ingress": true,
   "ingress_port": 1337,
