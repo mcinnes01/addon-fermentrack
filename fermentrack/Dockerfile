@@ -78,20 +78,19 @@ RUN chown nginx:nginx /run/nginx.pid
 #
 RUN mkdir -p /data/fermentrack/data
 RUN mkdir -p /home/fermentrack/fermentrack/data
-RUN rm -fR /home/fermentrack/fermentrack/data
-RUN ln -sf /home/fermentrack/fermentrack/data ~/data/fermentrack/data 
+RUN ln -sf /data/fermentrack/data /home/fermentrack/fermentrack/data
 #
 # Create fermentrack db directory and symlink to ha data volume
 #
 RUN mkdir -p /data/fermentrack/db
 RUN mkdir -p /home/fermentrack/fermentrack/db
-RUN ln -sf /home/fermentrack/fermentrack/db ~/data/fermentrack/db
+RUN ln -sf /data/fermentrack/db /home/fermentrack/fermentrack/db
 #
 # Create fermentrack log directory and symlink to ha data volume
 #
 RUN mkdir -p /data/fermentrack/log
 RUN mkdir -p /home/fermentrack/fermentrack/log
-RUN ln -sf /home/fermentrack/fermentrack/log ~/data/fermentrack/log
+RUN ln -sf /data/fermentrack/log /home/fermentrack/fermentrack/log
 #
 # Setup the startup scripts and configure webservers
 #
