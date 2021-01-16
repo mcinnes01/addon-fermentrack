@@ -79,7 +79,22 @@ RUN chown nginx:nginx /run/nginx.pid
 USER root
 COPY entrypoint.sh /home/fermentrack/entrypoint.sh
 RUN chmod 700 /home/fermentrack/entrypoint.sh
+
+# Create fermentrack data directory and symlink to ha data volume
+RUN mkdir -p /data/fermentrack/data
+RUN mkdir -p /home/fermentrack/fermentrack/data
 RUN rm -fR /home/fermentrack/fermentrack/data
+RUN ln -sf /data/fermentrack/data /home/fermentrack/fermentrack/data
+
+# Create fermentrack db directory and symlink to ha data volume
+RUN mkdir -p /data/fermentrack/db
+RUN mkdir -p /home/fermentrack/fermentrack/db
+RUN ln -sf /data/fermentrack/db /home/fermentrack/fermentrack/db
+
+# Create fermentrack log directory and symlink to ha data volume
+RUN mkdir -p /data/fermentrack/log
+RUN mkdir -p /home/fermentrack/fermentrack/log
+RUN ln -sf /data/fermentrack/log /home/fermentrack/fermentrack/log
 #
 # Start the supervisor
 #

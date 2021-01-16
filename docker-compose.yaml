@@ -13,7 +13,5 @@ services:
     ports:
       - "81:8080"
     volumes:
-        - ./volumes/db:/home/fermentrack/fermentrack/db
-        - ./volumes/data:/home/fermentrack/fermentrack/data
-        - ./volumes/log:/home/fermentrack/fermentrack/log
+        - ./data:/data
         - /dev:/dev
