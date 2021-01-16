@@ -73,6 +73,7 @@ RUN chown -R nginx:nginx /var/log/nginx
 RUN chown -R nginx:nginx /var/lib/nginx
 RUN touch /run/nginx.pid
 RUN chown nginx:nginx /run/nginx.pid
+RUN chmod 777 /data
 #
 # Create fermentrack data directory and symlink to ha data volume
 #
