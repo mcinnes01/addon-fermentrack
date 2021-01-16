@@ -1,129 +1,34 @@
-# Home Assistant Community Add-on: Fermentrack
+# Fermentrack Docker Image
 
-[![GitHub Release][releases-shield]][releases]
-![Project Stage][project-stage-shield]
-[![License][license-shield]](LICENSE.md)
+If you want to know more about Fermentrack please go to https://docs.fermentrack.com/.
 
-![Supports aarch64 Architecture][aarch64-shield]
-![Supports amd64 Architecture][amd64-shield]
-![Supports armhf Architecture][armhf-shield]
-![Supports armv7 Architecture][armv7-shield]
-![Supports i386 Architecture][i386-shield]
+NOTE! This is still under testing/development and might not work as expected. 
 
-[![GitLab CI][gitlabci-shield]][gitlabci]
-![Project Maintenance][maintenance-shield]
-[![GitHub Activity][commits-shield]][commits]
+In the future the version tag will be used to track the base installation, linux version, nginx, redis python etc. There will most likley be a new build every 3-6 months to include new security fixes from the core components. But you can always fork the repository and do your own build if you want. 
 
-[![Discord][discord-shield]][discord]
-[![Community Forum][forum-shield]][forum]
+These are the builds that have been released so far.
 
-The open platform for beautiful analytics and monitoring.
+Newer versions have switched to debian and is now support more targets i386/amd64/armv7
 
-![Grafana in the Home Assistant Frontend](images/screenshot.png)
+- v0.6.0 = **Under development, switched to automatic build via github actions, added documentation.**
 
-## About
+These versions only exist for amd64 target and are based on ubuntu stable release
 
-The analytics platform for all your metrics.
+- v0.5.0 = fermentrack release b4e7378 from 19 Dec 2020, tested bluetooth and firmware update
+- v0.4.0 = fermentrack release 3f6a8a1 from 11 Nov 2020, locked version of numpy since the latest version gave wrong result in gravity calculation
+- v0.3.0 = fermentrack release 99495bf from 7 Nov 2020, most functions should work now (bluetooth is still not verified)
+- v0.2.0 = fermentrack release 4d8d89b from 22 Aug 2020 but with additional code to disable git integration (not to break the installation)
+- v0.1.0 = fermentrack release 4d8d89b from 22 Aug 2020 (testing)
 
-Grafana allows you to query, visualize, alert on and understand your metrics
-no matter where they are stored. Create, explore, and share dashboards. Learn
-about your Home Automation system using sexy and compelling graphs, and other
-data visualizations.
+## Documentation
 
-Combine this add-on with the InfluxDB add-on to get insanely powerful
-insights to your home.
+Documentation has now been moved to the docs folder of the repository, here you can find the history and instructions for build and installation.
+Any suggestions on improvements are welcome. Pplease backup your data files before testing. I take no responsibility for lost data. The project is made available as is. 
 
-[:books: Read the full add-on documentation][docs]
+You can also read the documentation online at; https://fermentrack-docker.readthedocs.io/
 
-## Support
+Good luck!
 
-Got questions?
+## Troubleshooting
 
-You have several options to get them answered:
-
-- The [Home Assistant Community Add-ons Discord chat server][discord] for add-on
-  support and feature requests.
-- The [Home Assistant Discord chat server][discord-ha] for general Home
-  Assistant discussions and questions.
-- The Home Assistant [Community Forum][forum].
-- Join the [Reddit subreddit][reddit] in [/r/homeassistant][reddit]
-
-You could also [open an issue here][issue] GitHub.
-
-## Contributing
-
-This is an active open-source project. We are always open to people who want to
-use the code or contribute to it.
-
-We have set up a separate document containing our
-[contribution guidelines](CONTRIBUTING.md).
-
-Thank you for being involved! :heart_eyes:
-
-## Authors & contributors
-
-The original setup of this repository is by [Franck Nijhof][frenck].
-
-For a full list of all authors and contributors,
-check [the contributor's page][contributors].
-
-## We have got some Home Assistant add-ons for you
-
-Want some more functionality to your Home Assistant instance?
-
-We have created multiple add-ons for Home Assistant. For a full list, check out
-our [GitHub Repository][repository].
-
-## License
-
-MIT License
-
-Copyright (c) 2018-2020 Franck Nijhof
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
-[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[armhf-shield]: https://img.shields.io/badge/armhf-no-red.svg
-[armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
-[commits-shield]: https://img.shields.io/github/commit-activity/y/hassio-addons/addon-grafana.svg
-[commits]: https://github.com/hassio-addons/addon-grafana/commits/master
-[contributors]: https://github.com/hassio-addons/addon-grafana/graphs/contributors
-[discord-ha]: https://discord.gg/c5DvZ4e
-[discord-shield]: https://img.shields.io/discord/478094546522079232.svg
-[discord]: https://discord.me/hassioaddons
-[docs]: https://github.com/hassio-addons/addon-grafana/blob/master/grafana/DOCS.md
-[forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg
-[forum]: https://community.home-assistant.io/t/home-assistant-community-add-on-grafana/54674?u=frenck
-[frenck]: https://github.com/frenck
-[github-sponsors-shield]: https://frenck.dev/wp-content/uploads/2019/12/github_sponsor.png
-[github-sponsors]: https://github.com/sponsors/frenck
-[gitlabci-shield]: https://gitlab.com/hassio-addons/addon-grafana/badges/master/pipeline.svg
-[gitlabci]: https://gitlab.com/hassio-addons/addon-grafana/pipelines
-[i386-shield]: https://img.shields.io/badge/i386-no-red.svg
-[issue]: https://github.com/hassio-addons/addon-grafana/issues
-[license-shield]: https://img.shields.io/github/license/hassio-addons/addon-grafana.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2020.svg
-[patreon-shield]: https://frenck.dev/wp-content/uploads/2019/12/patreon.png
-[patreon]: https://www.patreon.com/frenck
-[project-stage-shield]: https://img.shields.io/badge/project%20stage-production%20ready-brightgreen.svg
-[reddit]: https://reddit.com/r/homeassistant
-[releases-shield]: https://img.shields.io/github/release/hassio-addons/addon-grafana.svg
-[releases]: https://github.com/hassio-addons/addon-grafana/releases
-[repository]: https://github.com/hassio-addons/repository
+See Issues on github for known problems and options.
