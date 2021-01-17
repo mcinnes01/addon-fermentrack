@@ -14,12 +14,12 @@ else
     exit -1
 fi
 
-for folder in {data,db,log}
-do
-    [ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/fermentrack/$folder"
-    sudo ln -sf /data/fermentrack/$folder /home/fermentrack/fermentrack/$folder
-    echo "Created symlink for $folder"
-done
+# for folder in {data,db,log}
+# do
+#     [ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/fermentrack/$folder"
+#     sudo ln -sf /data/fermentrack/$folder /home/fermentrack/fermentrack/$folder
+#     echo "Created symlink for $folder"
+# done
 
 if [ -f /home/fermentrack/fermentrack/db/secretsettings.py ]
 then
