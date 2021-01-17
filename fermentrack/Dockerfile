@@ -82,9 +82,6 @@ RUN mkdir -p /data/fermentrack/data /data/fermentrack/db /data/fermentrack/log
 RUN ln -sf /data/fermentrack/data fermentrack/data
 RUN ln -sf /data/fermentrack/db fermentrack/db
 RUN ln -sf /data/fermentrack/log fermentrack/log
-RUN chmod -R 777 /home/fermentrack/fermentrack/data
-RUN chmod -R 777 /home/fermentrack/fermentrack/db
-RUN chmod -R 777 /home/fermentrack/fermentrack/log
 #
 # Setup the startup scripts and configure webservers
 #
