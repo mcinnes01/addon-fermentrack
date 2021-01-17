@@ -14,11 +14,11 @@ else
     exit -1
 fi
 
-for _i in {data,db,log}
+for folder in {data,db,log}
 do
-    [ ! -d "/data/fermentrack/$_i" ] &&  $_mkdir -p "/data/fermentrack/$_i"
-    ln -sf /data/fermentrack/$_i /home/fermentrack/fermentrack/$_i
-    echo "Created symlink for $_i"
+    [ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/fermentrack/$folder"
+    ln -sf /data/fermentrack/$folder /home/fermentrack/fermentrack/$folder
+    echo "Created symlink for $folder"
 done
 
 if [ -f /home/fermentrack/fermentrack/db/secretsettings.py ]
