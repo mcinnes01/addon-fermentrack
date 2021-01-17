@@ -77,10 +77,11 @@ RUN chown nginx:nginx /run/nginx.pid
 # Create symlinks to volume
 #
 VOLUME [ "/data" ]
-WORKDIR /data/fermentrack
-RUN ln -sf data /home/fermentrack/fermentrack/data
-RUN ln -sf db /home/fermentrack/fermentrack/db
-RUN ln -sf log /home/fermentrack/fermentrack/log
+WORKDIR /home/fermentrack
+RUN mkdir -p fermentrack/data fermentrack/db fermentrack/log
+RUN ln -sf fermentrack/data /data/fermentrack
+RUN ln -sf fermentrack/db /data/fermentrack
+RUN ln -sf fermentrack/log /data/fermentrack
 #
 # Setup the startup scripts and configure webservers
 #
