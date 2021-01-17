@@ -78,9 +78,9 @@ RUN chown nginx:nginx /run/nginx.pid
 #
 VOLUME [ "/data" ]
 WORKDIR /data/fermentrack
-RUN ln -rs data /home/fermentrack/fermentrack/data
-RUN ln -rs db /home/fermentrack/fermentrack/db
-RUN ln -rs log /home/fermentrack/fermentrack/log
+RUN ln -sf data /home/fermentrack/fermentrack/data
+RUN ln -sf db /home/fermentrack/fermentrack/db
+RUN ln -sf log /home/fermentrack/fermentrack/log
 #
 # Setup the startup scripts and configure webservers
 #
