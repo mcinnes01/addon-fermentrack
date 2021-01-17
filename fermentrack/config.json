@@ -1,11 +1,12 @@
 {
   "name": "Fermentrack",
-  "version": "2021.1.14",
+  "version": "2021.1.15",
   "slug": "fermentrack",
   "description": "BrewPi-compatible fermentation tracking & temperature control software",
   "url": "https://github.com/mcinnes01/addon-fermentrack",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
   "startup": "services",
+  "init": false,
   "ingress": true,
   "ingress_port": 1337,
   "panel_icon": "mdi:beer",
@@ -16,14 +17,12 @@
   "usb": true,
   "device-tree": true,
   "privileged": [
-    "SYS_ADMIN",
     "SYS_RAWIO",
-    "NET_ADMIN",
-    "SYS_MODULE",
-    "SYS_RESOURCE"
+    "NET_ADMIN"
   ], 
   "hassio_api": true,
-  "hassio_role": "default",
+  "hassio_role": "manager",
+  "homeassistant_api": true,
   "map": ["ssl"],
   "options": {
     "plugins": [],
