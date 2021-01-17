@@ -4,16 +4,6 @@ set -e
 #
 # Check if we have mounted all needed volume
 #
-echo "Checking if all required volumes are mounted correctly"
-if [ -d /home/fermentrack/fermentrack/data ] && [ -d /home/fermentrack/fermentrack/db ]
-then
-    echo "Volume for data and database are mounted. "
-else
-    echo "Volume for data and/or database is NOT mounted. Aborting startup since data will not be persistent."
-    sleep 60
-    exit -1
-fi
-
 for folder in {fermentrack/data,fermentrack/db,fermentrack/log}
 do
     [ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/$folder"
