@@ -17,6 +17,7 @@ server {
       proxy_set_header Host $http_host;
       proxy_redirect off;
       proxy_pass http://127.0.0.1:8123;
+      proxy_hide_header X-Frame-Options;
     }
 
     # static is where we store static files
