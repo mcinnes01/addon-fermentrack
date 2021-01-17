@@ -10,7 +10,7 @@ do
     #[ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/fermentrack/$folder"
     [ ! -d "/home/fermentrack/$folder" ] && mkdir -p "/home/fermentrack/$folder"
     cd /home/fermentrack
-    sudo ln -sf "/home/fermentrack/$folder" "/data"
+    sudo ln -sf "/home/fermentrack/$folder" "/data/fermentrack"
     echo "Created symlink for $folder"
     touch "$folder/link.txt"
     [ -f "$folder/link.txt" ] && echo "$folder/link.txt exist." || echo "$folder/link.txt does not exist."
