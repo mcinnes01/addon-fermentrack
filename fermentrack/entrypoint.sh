@@ -4,12 +4,13 @@ set -e
 #
 # Check if we have mounted all needed volume
 #
-for folder in {data,db,log}
+
+for folder in {fermentrack/data,fermentrack/db,fermentrack/log}
 do
-    [ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/fermentrack/$folder"
-    #[ ! -d "/home/fermentrack/fermentrack/$folder" ] && mkdir -p "/home/fermentrack/fermentrack/$folder"
-    cd /data/fermentrack
-    sudo ln -sf "$folder" "/home/fermentrack/fermentrack"
+    #[ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/fermentrack/$folder"
+    [ ! -d "/home/fermentrack/$folder" ] && mkdir -p "/home/fermentrack/$folder"
+    cd /home/fermentrack
+    sudo ln -sf "/home/fermentrack/$folder" "/data"
     echo "Created symlink for $folder"
 done
 cd /
