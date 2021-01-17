@@ -78,10 +78,13 @@ RUN chown nginx:nginx /run/nginx.pid
 #
 VOLUME [ "/data" ]
 WORKDIR /home/fermentrack
-RUN mkdir -p fermentrack/data fermentrack/db fermentrack/log
+RUN mkdir -p /data/fermentrack/data /data/fermentrack/db /data/fermentrack/log
 RUN ln -sf fermentrack/data /data/fermentrack
 RUN ln -sf fermentrack/db /data/fermentrack
 RUN ln -sf fermentrack/log /data/fermentrack
+RUN chmod -R 777 /home/fermentrack/fermentrack/data
+RUN chmod -R 777 /home/fermentrack/fermentrack/db
+RUN chmod -R 777 /home/fermentrack/fermentrack/log
 #
 # Setup the startup scripts and configure webservers
 #
