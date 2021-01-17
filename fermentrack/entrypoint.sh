@@ -7,7 +7,7 @@ set -e
 for folder in {fermentrack/data,fermentrack/db,fermentrack/log}
 do
     [ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/$folder"
-    #[ ! -d "/home/fermentrack/$folder" ] && mkdir -p "/home/fermentrack/$folder"
+    [ ! -d "/home/fermentrack/$folder" ] && mkdir -p "/home/fermentrack/$folder"
     sudo ln -sf "/data/$folder" "/home/fermentrack/$folder"
     echo "Created symlink for $folder"
 done
@@ -28,6 +28,7 @@ fi
 # Secure that access rights for all mounted volumes are correct
 #
 echo "Setting correct access rights on mounted volumes"
+chown -R fermentrack:fermentrack /data
 chown -R fermentrack:fermentrack /home/fermentrack/fermentrack/db
 chown -R fermentrack:fermentrack /home/fermentrack/fermentrack/data
 chown -R fermentrack:fermentrack /home/fermentrack/fermentrack/log
