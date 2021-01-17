@@ -8,7 +8,7 @@ for folder in {fermentrack/data,fermentrack/db,fermentrack/log}
 do
     [ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/$folder"
     #[ ! -d "/home/fermentrack/$folder" ] && mkdir -p "/home/fermentrack/$folder"
-    sudo ln -sf /data/$folder /home/fermentrack/fermentrack/$folder
+    sudo ln -sf "/data/$folder" "/home/fermentrack/$folder"
     echo "Created symlink for $folder"
 done
 
