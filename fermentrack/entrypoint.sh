@@ -17,7 +17,7 @@ fi
 for folder in {data,db,log}
 do
     [ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/fermentrack/$folder"
-    sudo ln -sf /home/fermentrack/fermentrack/$folder /data/fermentrack/$folder
+    sudo ln -sf /data/fermentrack/$folder /home/fermentrack/fermentrack/$folder
     echo "Created symlink for $folder"
 done
 
