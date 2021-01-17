@@ -4,11 +4,11 @@ set -e
 #
 # Check if we have mounted all needed volume
 #
-cd /data/fermentrack
 for folder in {data,db,log}
 do
     [ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/fermentrack/$folder"
     [ ! -d "/home/fermentrack/fermentrack/$folder" ] && mkdir -p "/home/fermentrack/fermentrack/$folder"
+    cd /data/fermentrack
     sudo ln -sf "$folder" "/home/fermentrack/fermentrack"
     echo "Created symlink for $folder"
 done
