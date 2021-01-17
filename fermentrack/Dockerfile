@@ -74,21 +74,16 @@ RUN chown -R nginx:nginx /var/lib/nginx
 RUN touch /run/nginx.pid
 RUN chown nginx:nginx /run/nginx.pid
 #
-# Create symlinks to volume
+# Create data volume
 #
 VOLUME [ "/data" ]
-# RUN mkdir -p /home/fermentrack/data/fermentrack/data /data/fermentrack/data
-# RUN mkdir -p /home/fermentrack/data/fermentrack/db /data/fermentrack/db
-# RUN mkdir -p /home/fermentrack/data/fermentrack/log /data/fermentrack/log
-# RUN ln -sf /data/fermentrack/data /home/fermentrack/fermentrack/data
-# RUN ln -sf /data/fermentrack/db /home/fermentrack/fermentrack/db
-# RUN ln -sf /data/fermentrack/log /home/fermentrack/fermentrack/log
 #
 # Setup the startup scripts and configure webservers
 #
 USER root
 COPY entrypoint.sh /home/fermentrack/entrypoint.sh
 RUN chmod 700 /home/fermentrack/entrypoint.sh
+RUN rm -fR /home/fermentrack/fermentrack/data
 #
 # Start the supervisor
 #
