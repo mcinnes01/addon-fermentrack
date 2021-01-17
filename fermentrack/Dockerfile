@@ -80,9 +80,9 @@ VOLUME [ "/data" ]
 RUN mkdir -p /home/fermentrack/data/fermentrack/data
 RUN mkdir -p /home/fermentrack/data/fermentrack/db
 RUN mkdir -p /home/fermentrack/data/fermentrack/log
-RUN ln -sf /data/fermentrack/data fermentrack/data
-RUN ln -sf /data/fermentrack/db fermentrack/db
-RUN ln -sf /data/fermentrack/log fermentrack/log
+RUN ln -sf /data/fermentrack/data /home/fermentrack/fermentrack/data
+RUN ln -sf /data/fermentrack/db /home/fermentrack/fermentrack/db
+RUN ln -sf /data/fermentrack/log /home/fermentrack/fermentrack/log
 #
 # Setup the startup scripts and configure webservers
 #
