@@ -14,6 +14,13 @@ else
     exit -1
 fi
 
+for _i in {data,db,log}
+do
+    [ ! -d "/data/fermentrack/$_i" ] &&  $_mkdir -p "/data/fermentrack/$_i"
+    ln -sf /data/fermentrack/$_i /home/fermentrack/fermentrack/$_i
+    echo "Created symlink for $_i"
+done
+
 if [ -f /home/fermentrack/fermentrack/db/secretsettings.py ]
 then
     echo "Copying secret settings from db folder to image"
