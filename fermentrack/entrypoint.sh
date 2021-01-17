@@ -4,13 +4,15 @@ set -e
 #
 # Check if we have mounted all needed volume
 #
-for folder in {fermentrack/data,fermentrack/db,fermentrack/log}
+cd /data/fermentrack
+for folder in {data,db,log}
 do
-    [ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/$folder"
-    [ ! -d "/home/fermentrack/$folder" ] && mkdir -p "/home/fermentrack/$folder"
-    sudo ln -sf "/data/$folder" "/home/fermentrack/$folder"
+    [ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/fermentrack/$folder"
+    [ ! -d "/home/fermentrack/fermentrack/$folder" ] && mkdir -p "/home/fermentrack/fermentrack/$folder"
+    sudo ln -sf "$folder" "/home/fermentrack/fermentrack"
     echo "Created symlink for $folder"
 done
+cd /
 
 if [ -f /home/fermentrack/fermentrack/db/secretsettings.py ]
 then
