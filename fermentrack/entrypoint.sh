@@ -12,6 +12,8 @@ do
     cd /home/fermentrack
     sudo ln -sf "/home/fermentrack/$folder" "/data"
     echo "Created symlink for $folder"
+    touch "$folder/link.txt"
+    [ -f "$folder/link.txt" ] && echo "$folder/link.txt exist." || echo "$folder/link.txt does not exist."
 done
 cd /
 
