@@ -37,9 +37,10 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 # Install fermentrack, just make a copy of git and we will handle the run commands in the supervisor
 #
 WORKDIR /data/fermentrack
+RUN mkdir -p /data/fermentrack/fermentrack/data
 #
 # Create the users, group and directories for git. Its needed for fermentrack to work correcly.
-# User fermentrack is added to the dialout group on order to have access to firmware flashing when running as non root. 
+# User fermentrack is added to the dialout group in order to have access to firmware flashing when running as non root. 
 #
 RUN groupadd -g 2000 fermentrack && useradd -m -u 2001 -g fermentrack -d /data/fermentrack fermentrack
 RUN groupadd -g 2002 nginx && useradd --system -M -u 2003 -g nginx nginx -s /usr/sbin/nologin
