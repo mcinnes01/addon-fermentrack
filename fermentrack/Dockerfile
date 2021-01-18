@@ -60,6 +60,8 @@ ENV VIRTUAL_ENV="/home/fermentrack/venv"
 ENV PATH="/home/fermentrack/venv/bin:/usr/bin:/usr/sbin:/bin:/sbin"
 ENV PYTHONPATH=":;/data/fermentrack;/home/fermentrack/fermentrack;/home/fermentrack/venv/bin;/home/fermentrack/venv/lib/python3.8/site-packages"
 ENV USE_DOCKER=true
+ENV MOUNT_DATA_DIR="/data/fermentrack/data"
+ENV MOUNT_DB_DIR="/data/fermentrack/db"
 RUN pip3 install --no-cache-dir -r /home/fermentrack/fermentrack/requirements.txt
 RUN pip3 install numpy==1.18.4
 #
@@ -77,6 +79,8 @@ RUN chown nginx:nginx /run/nginx.pid
 # Create data volume
 #
 VOLUME [ "/data" ]
+RUN mkdir -p /data/fermentrack/data
+RUN mkdir -p /data/fermentrack/db
 #
 # Setup the startup scripts and configure webservers
 #
@@ -90,8 +94,6 @@ RUN rm -fR /home/fermentrack/fermentrack/data
 WORKDIR /home/fermentrack
 USER root
 RUN date >> /home/fermentrack/build_info
-ENV MOUNT_DATA_DIR="/data/fermentrack/data"
-ENV MOUNT_DB_DIR="/data/fermentrack/db"
 ENTRYPOINT ["/home/fermentrack/entrypoint.sh"]
 CMD [""]
 
