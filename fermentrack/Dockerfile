@@ -37,32 +37,30 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 # Create the users, group and directories for git. Its needed for fermentrack to work correcly.
 # User fermentrack is added to the dialout group on order to have access to firmware flashing when running as non root. 
 #
-RUN groupadd -g 2000 fermentrack && useradd -m -u 2001 -g fermentrack fermentrack
 RUN groupadd -g 2002 nginx && useradd --system -M -u 2003 -g nginx nginx -s /usr/sbin/nologin
 RUN usermod -a -G dialout fermentrack
 #
 # Install fermentrack, just make a copy of git and we will handle the run commands in the supervisor
 #
-WORKDIR /home/fermentrack
+WORKDIR /data/fermentrack
+RUN groupadd -g 2000 fermentrack && useradd -m -u 2001 -g fermentrack -d /data/fermentrack fermentrack
 USER fermentrack:fermentrack
 #
 # Clone the master branch of fermentrack into the image (updates will work afterwards)
 #
-RUN git clone --single-branch --branch dev https://github.com/mcinnes01/fermentrack.git /home/fermentrack/fermentrack
+RUN git clone --single-branch --branch dev https://github.com/thorrak/fermentrack.git /data/fermentrack/fermentrack
 #
 # Setup python and install the packages
 #
 USER root
-WORKDIR /home/fermentrack
+WORKDIR /data/fermentrack
 RUN pip3 install virtualenv
 RUN virtualenv venv
-ENV VIRTUAL_ENV="/home/fermentrack/venv"
-ENV PATH="/home/fermentrack/venv/bin:/usr/bin:/usr/sbin:/bin:/sbin"
-ENV PYTHONPATH=":;/data/fermentrack;/home/fermentrack/fermentrack;/home/fermentrack/venv/bin;/home/fermentrack/venv/lib/python3.8/site-packages"
+ENV VIRTUAL_ENV="/data/fermentrack/venv"
+ENV PATH="/data/fermentrack/venv/bin:/usr/bin:/usr/sbin:/bin:/sbin"
+ENV PYTHONPATH=":;/data/fermentrack;/data/fermentrack/fermentrack;/data/fermentrack/venv/bin;/data/fermentrack/venv/lib/python3.8/site-packages"
 ENV USE_DOCKER=true
-ENV MOUNT_DATA_DIR="/data/fermentrack/data"
-ENV MOUNT_DB_DIR="/data/fermentrack/db"
-RUN pip3 install --no-cache-dir -r /home/fermentrack/fermentrack/requirements.txt
+RUN pip3 install --no-cache-dir -r /data/fermentrack/fermentrack/requirements.txt
 RUN pip3 install numpy==1.18.4
 #
 # Setup nginx and update config to point towards fermentrack. 
@@ -76,25 +74,19 @@ RUN chown -R nginx:nginx /var/lib/nginx
 RUN touch /run/nginx.pid
 RUN chown nginx:nginx /run/nginx.pid
 #
-# Create data volume
-#
-VOLUME [ "/data" ]
-RUN mkdir -p /data/fermentrack/data
-RUN mkdir -p /data/fermentrack/db
-#
 # Setup the startup scripts and configure webservers
 #
 USER root
-COPY entrypoint.sh /home/fermentrack/entrypoint.sh
-RUN chmod 700 /home/fermentrack/entrypoint.sh
-RUN rm -fR /home/fermentrack/fermentrack/data
+COPY entrypoint.sh /data/fermentrack/entrypoint.sh
+RUN chmod 700 /data/fermentrack/entrypoint.sh
+RUN rm -fR /data/fermentrack/fermentrack/data
 #
 # Start the supervisor
 #
-WORKDIR /home/fermentrack
+WORKDIR /data/fermentrack
 USER root
-RUN date >> /home/fermentrack/build_info
-ENTRYPOINT ["/home/fermentrack/entrypoint.sh"]
+RUN date >> /data/fermentrack/build_info
+ENTRYPOINT ["/data/fermentrack/entrypoint.sh"]
 CMD [""]
 
 # Build arugments

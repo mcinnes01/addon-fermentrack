@@ -1,32 +1,38 @@
 #!/bin/bash
 set -e
 
-
 #
 # Check if we have mounted all needed volume
 #
-[ ! -d "${MOUNT_DATA_DIR}" ] && mkdir -p "${MOUNT_DATA_DIR}"
-[ ! -d "${MOUNT_DB_DIR}" ] && mkdir -p "${MOUNT_DB_DIR}"
+echo "Checking if all required volumes are mounted correctly"
+if [ -d /data/fermentrack/fermentrack/data ] && [ -d /data/fermentrack/fermentrack/db ]
+then
+    echo "Volume for data and database are mounted. "
+else
+    echo "Volume for data and/or database is NOT mounted. Aborting startup since data will not be persistent."
+    sleep 60
+    exit -1
+fi
 
-if [ -f $MOUNT_DB_DIR/db/secretsettings.py ]
+if [ -f /data/fermentrack/fermentrack/db/secretsettings.py ]
 then
     echo "Copying secret settings from db folder to image"
-    cp $MOUNT_DB_DIR/db/secretsettings.py /home/fermentrack/fermentrack/fermentrack_django/secretsettings.py
-elif [ ! -f /home/fermentrack/fermentrack/fermentrack_django/secretsettings.py ]
+    cp /data/fermentrack/fermentrack/db/secretsettings.py /data/fermentrack/fermentrack/fermentrack_django/secretsettings.py
+elif [ ! -f /data/fermentrack/fermentrack/fermentrack_django/secretsettings.py ]
 then
     echo "No secret file found, creating one"
-    sudo -u fermentrack /home/fermentrack/fermentrack/utils/make_secretsettings.sh
+    sudo -u fermentrack /data/fermentrack/fermentrack/utils/make_secretsettings.sh
     echo "Saving copy of secretsfile to db folder"
-    cp /home/fermentrack/fermentrack/fermentrack_django/secretsettings.py $MOUNT_DB_DIR/secretsettings.py
+    cp /data/fermentrack/fermentrack/fermentrack_django/secretsettings.py /data/fermentrack/fermentrack/db/secretsettings.py
 fi
 
 #
 # Secure that access rights for all mounted volumes are correct
 #
 echo "Setting correct access rights on mounted volumes"
-chown -R fermentrack:fermentrack $MOUNT_DB_DIR
-chown -R fermentrack:fermentrack $MOUNT_DATA_DIR
-chown -R fermentrack:fermentrack /home/fermentrack/fermentrack/log
+chown -R fermentrack:fermentrack /data/fermentrack/fermentrack/db
+chown -R fermentrack:fermentrack /data/fermentrack/fermentrack/data
+chown -R fermentrack:fermentrack /data/fermentrack/fermentrack/log
 
 #
 # Print image version
@@ -38,7 +44,7 @@ cat /etc/issue
 redis-server -v
 python -V
 echo "Image build date: "
-cat /home/fermentrack/build_info
+cat /data/fermentrack/build_info
 
 #
 # Start NGINX
@@ -78,22 +84,19 @@ fi
 echo "Starting Fermentrack"
 sudo -u fermentrack /bin/bash <<EOF
 export USE_DOCKER=true
-cd /home/fermentrack/fermentrack
-source /home/fermentrack/venv/bin/activate
-export PYTHONPATH=":;/data/fermentrack;/home/fermentrack/fermentrack;/home/fermentrack/venv/bin;/home/fermentrack/venv/lib/python3.8/site-packages"
-
+cd /data/fermentrack/fermentrack
+source /data/fermentrack/venv/bin/activate
+export PYTHONPATH=":;/data/fermentrack/fermentrack;/data/fermentrack/venv/bin;/data/fermentrack/venv/lib/python3.8/site-packages"
 echo "Collecting static files"
 python manage.py collectstatic --noinput 
 echo "Applying database migration"
 python manage.py migrate --noinput
-
 echo "Version/Source of fermentrack installed in image:"
 echo "****************************************************************"
 git remote -v
 echo ""
 git log -n 1 --pretty=short
 echo "****************************************************************"
-
 echo "Starting circus deamon"
 circusd circus.ini
 EOF
