@@ -1,41 +1,38 @@
 #!/bin/bash
 set -e
 
+
 #
 # Check if we have mounted all needed volume
 #
+echo "Checking if all required volumes are mounted correctly"
+if [ -d $MOUNT_DATA_DIR ] && [ -d $MOUNT_DB_DIR ]
+then
+    echo "Volume for data and database are mounted. "
+else
+    echo "Volume for data and/or database is NOT mounted. Aborting startup since data will not be persistent."
+    sleep 60
+    exit -1
+fi
 
-for folder in {fermentrack/data,fermentrack/db,fermentrack/log}
-do
-    #[ ! -d "/data/fermentrack/$folder" ] && mkdir -p "/data/fermentrack/$folder"
-    [ ! -d "/home/fermentrack/$folder" ] && mkdir -p "/home/fermentrack/$folder"
-    cd /home/fermentrack
-    sudo ln -sf "/home/fermentrack/$folder" "/data/fermentrack"
-    echo "Created symlink for $folder"
-    touch "$folder/link.txt"
-    [ -f "$folder/link.txt" ] && echo "$folder/link.txt exist." || echo "$folder/link.txt does not exist."
-done
-cd /
-
-if [ -f /home/fermentrack/fermentrack/db/secretsettings.py ]
+if [ -f $MOUNT_DB_DIR/db/secretsettings.py ]
 then
     echo "Copying secret settings from db folder to image"
-    cp /home/fermentrack/fermentrack/db/secretsettings.py /home/fermentrack/fermentrack/fermentrack_django/secretsettings.py
+    cp $MOUNT_DB_DIR/db/secretsettings.py /home/fermentrack/fermentrack/fermentrack_django/secretsettings.py
 elif [ ! -f /home/fermentrack/fermentrack/fermentrack_django/secretsettings.py ]
 then
     echo "No secret file found, creating one"
     sudo -u fermentrack /home/fermentrack/fermentrack/utils/make_secretsettings.sh
     echo "Saving copy of secretsfile to db folder"
-    cp /home/fermentrack/fermentrack/fermentrack_django/secretsettings.py /home/fermentrack/fermentrack/db/secretsettings.py
+    cp /home/fermentrack/fermentrack/fermentrack_django/secretsettings.py $MOUNT_DB_DIR/secretsettings.py
 fi
 
 #
 # Secure that access rights for all mounted volumes are correct
 #
 echo "Setting correct access rights on mounted volumes"
-chown -R fermentrack:fermentrack /data
-chown -R fermentrack:fermentrack /home/fermentrack/fermentrack/db
-chown -R fermentrack:fermentrack /home/fermentrack/fermentrack/data
+chown -R fermentrack:fermentrack $MOUNT_DB_DIR
+chown -R fermentrack:fermentrack $MOUNT_DATA_DIR
 chown -R fermentrack:fermentrack /home/fermentrack/fermentrack/log
 
 #
@@ -90,7 +87,7 @@ sudo -u fermentrack /bin/bash <<EOF
 export USE_DOCKER=true
 cd /home/fermentrack/fermentrack
 source /home/fermentrack/venv/bin/activate
-export PYTHONPATH=":;/home/fermentrack/fermentrack;/home/fermentrack/venv/bin;/home/fermentrack/venv/lib/python3.8/site-packages"
+export PYTHONPATH=":;/data/fermentrack;/home/fermentrack/fermentrack;/home/fermentrack/venv/bin;/home/fermentrack/venv/lib/python3.8/site-packages"
 
 echo "Collecting static files"
 python manage.py collectstatic --noinput 
