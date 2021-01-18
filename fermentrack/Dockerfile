@@ -37,7 +37,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 # Install fermentrack, just make a copy of git and we will handle the run commands in the supervisor
 #
 WORKDIR /data/fermentrack
-RUN mkdir -p /data/fermentrack/fermentrack/data
+RUN mkdir -p /data/fermentrack/fermentrack
 #
 # Create the users, group and directories for git. Its needed for fermentrack to work correcly.
 # User fermentrack is added to the dialout group in order to have access to firmware flashing when running as non root. 
