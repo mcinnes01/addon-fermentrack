@@ -42,6 +42,8 @@ WORKDIR /data/fermentrack
 # User fermentrack is added to the dialout group on order to have access to firmware flashing when running as non root. 
 #
 RUN groupadd -g 2000 fermentrack && useradd -m -u 2001 -g fermentrack -d /data/fermentrack fermentrack
+RUN groupadd -g 2002 nginx && useradd --system -M -u 2003 -g nginx nginx -s /usr/sbin/nologin
+RUN usermod -a -G dialout fermentrack
 USER fermentrack:fermentrack
 #
 # Clone the master branch of fermentrack into the image (updates will work afterwards)
