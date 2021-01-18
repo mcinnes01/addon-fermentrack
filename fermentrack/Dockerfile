@@ -92,6 +92,7 @@ USER root
 RUN date >> /home/fermentrack/build_info
 ENV MOUNT_DATA_DIR="/data/fermentrack/data"
 ENV MOUNT_DB_DIR="/data/fermentrack/db"
+RUN mkdir -p ${MOUNT_DATA_DIR} ${MOUNT_DB_DIR}
 ENTRYPOINT ["/home/fermentrack/entrypoint.sh"]
 CMD [""]
 
