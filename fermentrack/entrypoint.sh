@@ -5,15 +5,8 @@ set -e
 #
 # Check if we have mounted all needed volume
 #
-echo "Checking if all required volumes are mounted correctly"
-if [ -d $MOUNT_DATA_DIR ] && [ -d $MOUNT_DB_DIR ]
-then
-    echo "Volume for data and database are mounted. "
-else
-    echo "Volume for data and/or database is NOT mounted. Aborting startup since data will not be persistent."
-    sleep 60
-    exit -1
-fi
+[ ! -d "${MOUNT_DATA_DIR}" ] && mkdir -p "${MOUNT_DATA_DIR}"
+[ ! -d "${MOUNT_DB_DIR}" ] && mkdir -p "${MOUNT_DB_DIR}"
 
 if [ -f $MOUNT_DB_DIR/db/secretsettings.py ]
 then
