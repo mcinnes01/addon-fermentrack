@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 #
 WORKDIR /data/fermentrack
 RUN mkdir -p /data/fermentrack/fermentrack
+RUN chmod -R 777 /data/fermentrack
 #
 # Create the users, group and directories for git. Its needed for fermentrack to work correcly.
 # User fermentrack is added to the dialout group in order to have access to firmware flashing when running as non root. 
