@@ -46,6 +46,8 @@ RUN chmod -R 777 /data/fermentrack
 RUN groupadd -g 2000 fermentrack && useradd -m -u 2001 -g fermentrack -d /data/fermentrack fermentrack
 RUN groupadd -g 2002 nginx && useradd --system -M -u 2003 -g nginx nginx -s /usr/sbin/nologin
 RUN usermod -a -G dialout fermentrack
+RUN awk -F: '{printf "%s:%s\n",$1,$3}' /etc/passwd
+RUN getent group | awk -F: '{printf "%s:%s\n",$1,$3}'
 USER fermentrack:fermentrack
 #
 # Clone the master branch of fermentrack into the image (updates will work afterwards)
